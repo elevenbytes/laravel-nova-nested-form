@@ -1,5 +1,5 @@
 {
-    "name": "handleglobal/nova-nested-form",
+    "name": "elbytes/nova-nested-form",
     "description": "A Laravel Nova package that allows you to create/update/delete nested related fields from a parent form.",
     "keywords": [
         "laravel",
@@ -8,25 +8,6 @@
         "nested",
         "relationship",
         "form"
-    ],
-    "homepage": "https://handleglobal.com",
-    "support": {
-        "email": "buch@procoders.tech",
-        "issues": "https://github.com/handleglobal/laravel-nova-nested-form/issues",
-        "source": "https://github.com/handleglobal/laravel-nova-nested-form",
-        "docs": "https://github.com/handleglobal/laravel-nova-nested-form#readme"
-    },
-    "authors": [
-        {
-            "name": "Dmitry Buchkovsky",
-            "homepage": "https://procoders.tech",
-            "email": "buch@procoders.tech"
-        },
-        {
-            "name": "Ardit Qerosi",
-            "homepage": "https://procoders.tech",
-            "email": "qerosi@proverstka.tech"
-        }
     ],
     "license": "MIT",
     "require": {
