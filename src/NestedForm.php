@@ -1,6 +1,6 @@
 <?php
 
-namespace Handleglobal\NestedForm;
+namespace Elbytes\NestedForm;
 
 use function GuzzleHttp\json_encode;
 use Illuminate\Support\Str;

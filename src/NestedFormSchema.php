@@ -1,6 +1,6 @@
 <?php
 
-namespace Handleglobal\NestedForm;
+namespace Elbytes\NestedForm;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;

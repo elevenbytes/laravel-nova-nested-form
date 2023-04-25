@@ -1,6 +1,6 @@
 <?php
 
-namespace Handleglobal\NestedForm;
+namespace Elbytes\NestedForm;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Events\ServingNova;

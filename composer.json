@@ -22,13 +22,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Handleglobal\\NestedForm\\": "src/"
+            "Elbytes\\NestedForm\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Handleglobal\\NestedForm\\FieldServiceProvider"
+                "Elbytes\\NestedForm\\FieldServiceProvider"
             ]
         }
     },

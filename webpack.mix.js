@@ -8,6 +8,6 @@ mix
   .sourceMaps()
   .vue({ version: 3 })
   .sass("resources/sass/field.scss", "css")
-  .nova("handleglobal/nova-nested-form");
+  .nova("elbytes/nova-nested-form");
 
 module.exports = {};

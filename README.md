@@ -35,7 +35,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 // Add use statement here.
-use Handleglobal\NestedForm\NestedForm;
+use Elbytes\NestedForm\NestedForm;
 
 class User extends Resource
 {

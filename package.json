@@ -24,6 +24,8 @@
         "laravel-vapor": "^0.4.2",
         "minimist": "^1.2.2",
         "resolve-url-loader": "^3.1.2",
+        "sass": "^1.62.0",
+        "sass-loader": "^12.6.0",
         "serialize-javascript": "^5.0.1",
         "tailwindcss": "^3.0.0",
         "uid": "^2.0.0",
