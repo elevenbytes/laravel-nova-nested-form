@@ -148,6 +148,13 @@ class NestedForm extends Field implements RelatableField
     public $heading;
 
     /**
+     * The heading template for children.
+     *
+     * @var string
+     */
+    public $headingTest;
+
+    /**
      * The maximum number of children.
      *
      * @var int
@@ -272,6 +279,18 @@ class NestedForm extends Field implements RelatableField
     }
 
     /**
+     * Set the heading.
+     *
+     * @param string $heading
+     */
+    public function headingTest(string $heading)
+    {
+        $this->headingTest = $heading;
+
+        return $this->returnContext;
+    }
+
+    /**
      * Set whether the form should be opened by default.
      *
      * @param boolean $opened
@@ -369,10 +388,12 @@ class NestedForm extends Field implements RelatableField
      */
     protected function fillAttributeFromRequest(NovaRequest $request, $requestAttribute, $model, $attribute)
     {
+        logger('fillAttributeFromRequest');
         if ($model->exists) {
             $newRequest = NovaRequest::createFrom($request);
             if (!$model->{$model->getKeyName()} && $request->has($model->getKeyName())) {
                 $model->{$model->getKeyName()} = $request->get($model->getKeyName());
+                logger('keyname=' . $model->getKeyName());
             }
             $children = collect($newRequest->get($requestAttribute));
             $newRequest->route()->setParameter('resource', $this->resourceName);

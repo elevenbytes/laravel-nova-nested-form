@@ -182,6 +182,16 @@ class NestedFormSchema implements JsonSerializable
     }
 
     /**
+     * Get the current heading.
+     */
+    protected function headingTest()
+    {
+        $heading = isset($this->parentForm->headingTest) ? $this->parentForm->headingTest : $this->defaultHeading();
+
+        return str_replace($this->parentForm::wrapIndex(), $this->index, $heading);
+    }
+
+    /**
      * Default heading.
      */
     protected function defaultHeading()
@@ -240,6 +250,7 @@ class NestedFormSchema implements JsonSerializable
         return [
             'fields' => $this->fields,
             'heading' => $this->heading(),
+            'headingTest' => $this->headingTest(),
             'opened' => $this->parentForm->opened,
             'attribute' => $this->attribute()
         ];

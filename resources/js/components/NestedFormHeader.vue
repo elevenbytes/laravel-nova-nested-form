@@ -10,7 +10,7 @@
       nova-nested-form-header
     "
   >
-    <div v-if="heading" v-html="heading" />
+    <div v-if="heading" v-html="heading"/>
     <div class="flex">
       <nested-form-view :child="child" class="mx-2" />
       <nested-form-remove :child="child" :field="field" class="mx-2" />
@@ -69,9 +69,9 @@ export default {
               ),
               (match, attribute, defaultValue = "") => {
                 const field = this.child.fields.find(
-                  (field) => field.originalAttribute === attribute
+                  (field) => field.originalAttribute === attribute || field.belongsToRelationship === attribute
                 );
-                return field ? field.value : defaultValue;
+                return field ? (field.value ? field.value : defaultValue) : defaultValue;
               }
             )
           : null)

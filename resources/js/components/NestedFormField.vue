@@ -12,10 +12,6 @@
     </help-text>
 
     <template v-if="shouldDisplay()">
-      <div class="p-1 flex items-center justify-center w-100 add-form">
-        <nested-form-add :field="field" />
-      </div>
-
       <template v-if="field.children && field.children.length > 0">
         <card
           v-for="(child, childIndex) in field.children"
@@ -55,6 +51,7 @@
             :show-help-text="childField.helpText != null"
             :via-resource="field.viaResource"
             :via-resource-id="field.viaResourceId"
+            @input="updateField"
             @file-deleted="$emit('file-deleted')"
           />
         </card>
@@ -68,6 +65,10 @@
             })
           }}
         </p>
+      </div>
+
+      <div class="p-1 flex items-center justify-center w-100 add-form">
+        <nested-form-add :field="field" />
       </div>
     </template>
 
@@ -85,6 +86,7 @@
 import { FormField, HandlesValidationErrors } from "laravel-nova";
 import NestedFormAdd from "./NestedFormAdd";
 import NestedFormHeader from "./NestedFormHeader";
+import axios from "axios";
 
 export default {
   mixins: [FormField, HandlesValidationErrors],
@@ -120,6 +122,98 @@ export default {
     },
   },
   methods: {
+    trigger(el, eventType) {
+      if (typeof eventType === 'string' && typeof el[eventType] === 'function') {
+        el[eventType]();
+      } else {
+        const event =
+            typeof eventType === 'string'
+                ? new Event(eventType, {bubbles: true})
+                : eventType;
+        el.dispatchEvent(event);
+      }
+    },
+
+    selectTargetType(type, value) {
+      for (const option of type.options) {
+        if (option.value === value) {
+          option.selected = true;
+          break;
+        }
+      }
+
+    },
+
+    fillTargets(wrapper, targets) {
+      if( targets ) {
+        const targetRows = wrapper.querySelectorAll('.simple-repeatable-row');
+        targets.forEach((item, i) => {
+          if( targetRows[i] ) {
+            const type = targetRows[i].querySelector('select[dusk*="--target_url_type--"]');
+            if( type ) {
+              this.selectTargetType(type, item.target_url_type);
+              type.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            const text = targetRows[i].querySelector('input[dusk*="--target_url--"]');
+            if( text ){
+              text.value = item.target_url;
+              text.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+          }
+        });
+      }
+    },
+
+    updateField(field) {
+      const testid = field.target.getAttribute('data-testid');
+
+      if( testid !== 'layers' )
+        return;
+
+      const simpleRepeatableWrapper = document.querySelector('.simple-repeatable');
+
+      if( simpleRepeatableWrapper ) {
+        const simpleRepeatableRowCnt = simpleRepeatableWrapper.querySelectorAll('.simple-repeatable-row').length;
+
+        if( simpleRepeatableRowCnt === 0 ) {
+          axios.post('/api/layers/targets', {lid: field.target.value})
+              .then(response => {
+                const data = response.data;
+
+                if (data.status === 'success') {
+                  const targets = data.targets;
+                  const targetsCnt = targets ? targets.length : 0;
+
+                  const currentTargets = simpleRepeatableWrapper.querySelectorAll('select[id*="[target_url]"]');
+                  const currentTargetsCnt = currentTargets ? currentTargets.length : 0;
+
+                  if (currentTargetsCnt === targetsCnt) {
+                  } else if (currentTargetsCnt > targetsCnt) {
+                    // remove last currentTargetsCnt - targetsCnt elements
+                    for (let i = currentTargetsCnt - 1; i >= targetsCnt; i--) {
+                      currentTargets[i].closest('.simple-repeatable-row').remove();
+                    }
+                  } else if (currentTargetsCnt < targetsCnt) {
+                    // add new (targetsCnt - currentTargetsCnt) elements by clicking on "Add new target" button
+                    const addNewTargetBtn = simpleRepeatableWrapper.querySelector('button.add-button');
+                    if (addNewTargetBtn) {
+                      for (let i = currentTargetsCnt; i < targetsCnt; i++) {
+                        this.trigger(addNewTargetBtn, 'click');
+                      }
+                    }
+                  }
+
+                  setTimeout(() => this.fillTargets(simpleRepeatableWrapper, targets), 100);
+                }
+              })
+              .catch(error => {
+                console.error(error);
+              });
+        }
+      }
+    },
+
     getStyle(index) {
       return index ? { borderRadius: 0 } : {};
     },
