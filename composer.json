@@ -4,7 +4,7 @@
     "keywords": [
         "laravel",
         "nova",
-        "nova 4",
+        "nova 5",
         "nested",
         "relationship",
         "form"
@@ -12,7 +12,7 @@
     "license": "MIT",
     "require": {
         "php": ">=8.0",
-        "laravel/nova": "^4.17"
+        "laravel/nova": "^5.0"
     },
     "repositories": [
         {
