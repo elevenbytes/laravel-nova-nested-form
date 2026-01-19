@@ -29,7 +29,7 @@ class HiddenBelongsTo extends BelongsTo
         }                                                                                                                         
     }  
 
-    public function fill(NovaRequest $request, $model)
+    public function fill(NovaRequest $request, object $model): void
     {
         $this->fillAttribute($request, $this->attribute, $model);
     }
