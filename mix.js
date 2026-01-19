@@ -11,15 +11,10 @@ class NovaExtension {
         this.name = name
     }
 
-    webpackPlugins() {
-        return new webpack.ProvidePlugin({
-            Errors: 'form-backend-validation',
-        })
-    }
-
     webpackConfig(webpackConfig) {
         webpackConfig.externals = {
             vue: 'Vue',
+            'laravel-nova-ui': 'LaravelNovaUi',
         }
 
         webpackConfig.resolve.alias = {

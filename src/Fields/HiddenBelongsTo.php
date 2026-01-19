@@ -19,17 +19,15 @@ class HiddenBelongsTo extends BelongsTo
         }
     }
 
-    public function resolve($resource, $attribute = null)
-    {
-        $attribute = $attribute ?? $this->attribute;
-        $this->value = $resource->{$attribute};
-
-        if ($this->value instanceof \Illuminate\Database\Eloquent\Model) {
-            $this->value = $this->value->getKey();
-        }
-
-        return $this;
-    }
+    public function resolve($resource, ?string $attribute = null): void                                                           
+    {                                                                                                                             
+        $attribute = $attribute ?? $this->attribute;                                                                              
+        $this->value = $resource->{$attribute};                                                                                   
+                                                                                                                                
+        if ($this->value instanceof \Illuminate\Database\Eloquent\Model) {                                                        
+            $this->value = $this->value->getKey();                                                                                
+        }                                                                                                                         
+    }  
 
     public function fill(NovaRequest $request, $model)
     {
